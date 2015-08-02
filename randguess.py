@@ -1,4 +1,4 @@
-import random, os, signal
+import random, os
 
 number = 0
 
