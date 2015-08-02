@@ -1,8 +1,19 @@
-import random
-
-# bug: no way out of exceptions when non-numeric input is received
+import random, os, signal
 
 number = 0
+
+def C():
+	os.system('clear')
+	
+def isNumber(guess):
+	try:
+		int(guess)
+		return True
+	except ValueError: 
+		return False
+		
+def signal_handler(signal, frame):
+    sys.exit
 
 def gRand():
 	global number
@@ -10,25 +21,34 @@ def gRand():
 	return number
 
 def g():
-	guess = input("Guess between 1 and 10: ")
-	guess = int(guess)
-	if isinstance(guess, int): # check if input is numeric
-		if guess < 11:
-			if guess == number:
-				print "Right!"
-				gRand()
-				g()
+	try:
+		guess = raw_input("Guess between 1 and 10: ")
+		if isNumber(guess) == True:
+		# if isinstance(guess, int): # check if input is numeric
+			if guess < 11 and guess >= 1:
+				if guess == number:
+					C()
+					print "Right!"
+					gRand()
+					g()
+				else:
+					C()
+					print "Wrong! It was %d" % number
+					gRand()
+					g()
 			else:
-				print "Wrong! It was %d" % number
+				C()
+				print "Guess greater than 10 or less than 1."
 				gRand()
 				g()
-		else:
-			print "Guess greater than 10."
+		elif isNumber(guess) == False:
+			C()
+			print "Invalid input."
 			gRand()
 			g()
-	else:
-		gRand()
-		g()
-
+	except KeyboardInterrupt:
+		C()
+		quit()
+C()
 gRand()
 g()
