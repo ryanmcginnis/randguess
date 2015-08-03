@@ -4,16 +4,6 @@ number = 0
 
 def C():
 	os.system('clear')
-	
-def isNumber(guess):
-	try:
-		int(guess)
-		return True
-	except ValueError: 
-		return False
-		
-def signal_handler(signal, frame):
-    sys.exit
 
 def gRand():
 	global number
@@ -22,33 +12,32 @@ def gRand():
 
 def g():
 	try:
-		guess = raw_input("Guess between 1 and 10: ")
-		if isNumber(guess) == True:
-		# if isinstance(guess, int): # check if input is numeric
-			if guess < 11 and guess >= 1:
-				if guess == number:
-					C()
-					print "Right!"
-					gRand()
-					g()
-				else:
-					C()
-					print "Wrong! It was %d" % number
-					gRand()
-					g()
-			else:
+		guess = int(raw_input("Guess between 1 and 10: "))
+		if guess < 11 and guess >= 1:
+			if guess == number:
 				C()
-				print "Guess greater than 10 or less than 1."
+				print "Right!"
 				gRand()
 				g()
-		elif isNumber(guess) == False:
+			else:
+				C()
+				print "Wrong! It was %d" % number
+				gRand()
+				g()
+		else:
 			C()
-			print "Invalid input."
+			print "Guess greater than 10 or less than 1."
 			gRand()
 			g()
 	except KeyboardInterrupt:
 		C()
+		print "Quitting...\n"
 		quit()
+	except ValueError:
+		C()
+		print "Invalid input."
+		gRand()
+		g()
 C()
 gRand()
 g()
